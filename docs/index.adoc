@@ -1,6 +1,6 @@
 = 忙しいプログラマーのための関数型プログラミング　Functional Programming for the Working Programmer
 岡部　健 / Ken Okabe <kentutorialbook@gmail.com>
-:keywords: monoid, functor, monad, functional programming, funcction, JavaScript, ECMAScript, Promise, FRP, io-next, 関数型プログラミング, モナド, プログラミング
+:keywords: monoid, functor, monad, functional programming, funcction, JavaScript, ECMAScript, Promise, FRP, io-next, 関数型プログラミング, モナド, プログラミング, mathmatics
 :description: timeline FRP Monad
 :homepage:    https://kentutorialbook.github.io/30minLearningJavaScriptMonad/
 :doctype: book
