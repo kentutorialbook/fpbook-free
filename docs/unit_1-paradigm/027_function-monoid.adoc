@@ -1,0 +1,287 @@
+= 関数のための演算子
+ifndef::stem[:stem: latexmath]
+ifndef::imagesdir[:imagesdir: ../img/]
+ifndef::source-highlighter[:source-highlighter: highlightjs]
+ifndef::highlightjs-theme:[:highlightjs-theme: tomorrow-night]
+ifndef::icons[:icons: font]
+
+++++
+<style type="text/css">
+p >code {background-color: #aaaaaa};　
+td >code {background-color: #aaaaaa};
+</style>
+++++
+
+== パイプライン演算子(Pipeline operator)
+
+image::1-12-2020-08-25-10-AM.png[]
+
+で、ある値とある関数を接続する二項演算の演算子としてもっとも単純なものは、
+
+
+link:https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Operators/Pipeline_operator[パイプライン演算子(Pipeline operator) (|>)]です。
+
+ 関数呼び出しの連結実験的なパイプライン演算子 |> (現在はステージ 1 です) は、式の値を関数に接続します。これによって、読みやすい方法で一連の関数呼び出しを作成することができます。結果的に、単一の引数を用いた関数呼び出しの糖衣構文となり、次のように書くことができます。
+
+image::6-7-2020-21-36-55-PM.png[]
+
+これは、従来からの関数適用の表記
+
+image::6-7-2020-21-26-22-PM.png[]
+
+の置き換えですが、集合と関数として眺めた場合、
+
+image::2-7-2020-13-48-34-PM.png[]
+
+パイプライン演算子のほうがむしろ直感的な記法であることがわかります。
+
+
+[width=80%, cols="^,^,^"]
+|===
+||インプット|アウトプット
+
+|xy
+|stem:[x]
+|stem:[y]
+
+|f(x)
+|stem:[x]
+|stem:[f(x)]
+
+|パイプライン
+|stem:[x]
+| `x \|> f`
+|===
+
+
+[source,js]
+----
+   const f = a => console.log(a);
+
+    f("hello"); //hello
+
+    "hello" |> f; //hello
+
+----
+
+
+JavaScriptではlink:https://github.com/tc39/proposal-pipeline-operator[実験的に導入がはじまろうとしている段階]です。
+　
+image::1-12-2020-10-52-48-AM.png[]
+
+
+
+[source,js]
+----
+const double = n => n * 2;
+const increment = n => n + 1;
+
+// パイプライン演算子なし
+double(increment(double(double(5)))); // 42
+
+// パイプライン演算子あり
+5 |> double |> double |> increment |> double; // 42
+----
+
+image::1-12-2020-10-21-34-AM.png[]
+
+
+image::5-7-2020-21-16-07-PM.png[]
+
+
+パイプライン演算子(PipelineOperator)は、TypeScirpt4.0以降では実験的に導入され使用可能なので、本書ではパイプライン演算子を積極的に活用していきます。
+
+link:https://github.com/microsoft/TypeScript/pull/38305[microsoft/TypeScript Add support for Pipeline Operator]
+
+link:https://www.typescriptlang.org/play?ts=4.0.0-pr-38305-12#code/EQCwpgNhD2AEAOBLelEDsy2igTgQwBdocBCYWAHwD5YBjaNAZ2gjADoYBzAbgChf6TArAAm0AK4AjVrAC8sNHJqKAVLABMfQY2HpaOMAFswaYfMWzlsANSwAjHwENmrDtE4AKXrB9iprDz0DY1MPP2kwMIkIjwBWAEpE+N54x1jKGnCZalFo7JogoxNhHKywbwy6ZxZ2Lm4fIA[TypeScript Playground]
+
+image::1-12-2020-10-31-28-AM.png[]
+
+== 合成関数（写像の合成）
+
+image::1-8-2020-08-30-56-AM.png[]
+
+今、入力装置（カメラなど）からサイコロの目のイメージのデータがインプットされ、 +
+画像認識して数値に変換できる機械学習済のコンピュータビジョンの関数が用意されており、 +
+さらに、簡単な関数で数値を偶数か奇数かに変換できる関数があるとします。
+
+image::5-7-2020-23-29-42-PM.png[]
+
+これは、サイコロの目のイメージのデータから +
+それが偶数なのか奇数なのか判定できる +
+link:https://ja.wikipedia.org/wiki/%E4%B8%81%E5%8D%8A[丁半博打]で需要がありそうな、ひとつのシステム＝プログラムです。
+
+関数型プログラミングのコードは数式なのですが、根本的には、こういう関数の合成（関数の接続）をしていく作業です。
+
+**stem:[f]: 画像認識して数値に変換できる機械学習済のコンピュータビジョンの関数** +
+**stem:[g] : 数値を偶数か奇数かに変換できる関数**
+
+stem:[f] と stem:[g] を合成します。
+
+image::1-10-2020-09-40-23-AM.png[]
+
+image::1-12-2020-11-20-10-AM.png[]
+
+*stem:[f ・ g] : 画像認識して数値を偶数か奇数かに変換できる関数*
+
+== 写像/関数の合成はMonoid(モノイド)
+
+さらにもっと複雑なプログラムのコードの場合、
+
+stem:[f] と stem:[g] と stem:[h] を合成します。
+
+image:1-10-2020-09-51-24-AM.png[]
+
+image::1-12-2020-11-32-43-AM.png[]
+
+
+image:1-7-2020-09-05-29-AM.png[]
+
+
+image::1-12-2020-08-54-11-AM.png[]
+
+というパターンで結合性があるので写像/関数の合成はモノイドです。
+
+そして、
+
+image::1-12-2020-11-56-15-AM.png[]
+
+なので、関数合成という二項演算で、結合性があるモノイド
+
+image::1-12-2020-11-55-18-AM.png[]
+
+== 関数合成演算子
+
+image::1-12-2020-11-57-57-AM.png[]
+
+関数　`.` 関数　＝　合成関数
+
+というイメージの中置の二項演算子を定義することを試みます。
+
+まず、2つの関数 `f` と `g` をインプットとし、 +
+合成された関数をアウトプットする関数 `composition`　を定義します。
+
+[source,js]
+----
+  const composition =
+    g => f => x => x |> f |> g;
+----
+
+すでに用意した `customOperator` 関数
+
+[source,js]
+.JavaScript演算子のユーザ定義のための関数
+----
+  const customOperator = op => f => set =>
+      Object.defineProperty(set, op, {
+        value: function (a) {
+          return f(a)(this);
+        }
+      });//returns new set/object
+----
+
+
+を利用して +
+`composition` を `.` で表現するように定義します。
+
+[source,js]
+----
+  Function.prototype |>
+    customOperator(`.`)
+      (composition);
+----
+
+具体的な関数 `f` `g` `h` を用意する。
+
+[source,js]
+----
+  const f = x => x * 2;
+  const g = x => x + 1;
+  const h = x => x ** 3;
+----
+
+`f` と `g` を合成します。
+
+image::1-10-2020-09-40-23-AM.png[]
+
+[source,js]
+----
+  {
+    1 |> f |> g
+      |> console.log; //3
+  }
+  {//function composition
+    const fg = composition(g)(f);
+    fg(1)
+      |> console.log; //3
+  }
+  {//function composition
+    const fg = (f)[`.`](g);
+    fg(1)
+      |> console.log; //3
+  }
+----
+
+[source,js]
+.Console
+----
+3
+3
+3
+----
+
+
+`f` と `g` と `h` を合成します。
+
+image::1-10-2020-09-51-24-AM.png[]
+
+[source,js]
+----
+  {
+    1 |> f |> g |> h
+      |> console.log; //27
+  }
+  {//function composition is nested
+    const fgh = composition(h)(composition(g)(f));
+    fgh(1)
+      |> console.log; //27
+  }
+  {//function composition
+    const fgh = (f)[`.`](g)[`.`](h);
+    fgh(1)
+      |> console.log; //27
+  }
+
+----
+
+[source,js]
+.Console
+----
+27
+27
+27
+----
+
+前置記法の `f(x)` この場合は
+
+[source,js]
+.ネストされてしまう前置記法のcomposition関数
+----
+composition(h)(composition(g)(f))
+----
+
+とネストしてしまいますが、 +
+中置記法の　`|>` パイプラインオペレータや、関数合成のカスタム二項演算子 `.` では、　
+
+[source,js]
+.関数適用と関数合成の中置記法
+----
+ 1 |> f |> g |> h
+
+(f)[`.`](g)[`.`](h)
+----
+
+と、関数合成のイメージどおりに記述できます。
+
+
+

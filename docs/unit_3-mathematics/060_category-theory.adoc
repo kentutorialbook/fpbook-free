@@ -1,0 +1,400 @@
+= 代数的構造
+:sectnums:
+ifndef::toc:[:toc: left]
+ifndef::toplevels:[:toclevels: 2]
+ifndef::stem[:stem: latexmath]
+ifndef::icons[:icons: font]
+ifndef::imagesdir[:imagesdir: ../img/]
+ifndef::source-highlighter[:source-highlighter: highlightjs]
+ifndef::highlightjs-theme:[:highlightjs-theme: tomorrow-night-eighties]
+ifndef::icons[:icons: font]
+
+++++
+<style type="text/css">
+th,td {
+    border: solid 0px;
+}　
+p>code {background-color: #aaaaaa};
+td>code {background-color: #aaaaaa};
+</style>
+++++
+
+[CAUTION]
+====
+完成から程遠い　10％以下　のドキュメント
+====
+　
+
+image::3-9-2020-03-47-47-AM.png[]
+
+image::3-9-2020-03-21-06-AM.png[]
+
+image::3-9-2020-03-37-25-AM.png[]
+
+https://en.wikipedia.org/wiki/Category_(mathematics)
+
+Some authors use a slight variation of the definition in which each object is identified with the corresponding identity morphism.
+
+image::2-9-2020-19-45-02-PM.png[]
+
+image::2-9-2020-15-17-32-PM.png[]
+
+image::2-9-2020-15-20-35-PM.png[]
+
+image::2-9-2020-15-22-29-PM.png[]
+
+
+Motivation and Philosophy
+
+なぜ
+
+命令型
+オブジェクト　　パターン
+関数　　関数　モノイド　ファンクタ　モナ℃　部品の選別　発見
+Haskell
+圏論
+
+オブジェクト指向の文脈で
+Controllerとか
+クリーンアーキテクチャ
+
+Model View Controller
+
+当初のアジェンダと裏腹に歴史的になんらプログラミングの複雑性の解決に寄与できていないことが知れ渡るようになってきた。
+
+
+データベースは圏である
+http://math.mit.edu/~dspivak/informatics/talks/galois.pdf
+http://math.mit.edu/~dspivak/informatics/talks/refinements_and_extensions.pdf
+
+発展の予知が大きい。
+
+image::1-8-2020-04-46-07-AM.png[]
+矢印の理論　圏論
+
+集合論が基礎だった
+
+2種類で数学が構築されていた。
+
+→の１種類だけで数学を構築します。
+
+まず最初に集合があって、その上で写像（関数）が定義される。
+
+これをひっくり返す。
+
+集合があるからその間に関数がある
+
+集合論はボトムアップ的なアプローチ、要素還元的なアプローチであると言える。
+
+
+
+つまり最初に要素を定義して集合が構成され、と素粒子みたいなものがあるという思想。
+
+一方、圏論はそのような基底、土台というものは存在しません、
+
+圏論はスケールする
+
+→があって、それがくるっと自己言及していたならば、それをまあとりあえず便宜的にオブジェクトとみなして良いだろう、それはなんであるかは知らない、問わない。
+
+そしてもちろん、その便宜的にオブジェクトとみなしていたもののが何らかの構造をもっている、つまり、自己言及以上の内部構造をもっている、つまり自己言及以上の複雑な圏がある、となる場合もあります。
+
+
+矢印があるなら、そのはじめと終わりがある。
+
+矢印だけの世界、
+関係でもそうですが、関数だけの世界で、はじめと終わりの定義域が一致
+
+つまり矢印がつながれば関数合成できるのは当たり前です。
+
+次に関数だけの世界なのでモノイドを構成します。
+関数合成できれば、そのつなげる順番は問わない、つまり結合法則が成り立つのはすでに
+
+
+
+image::3-8-2020-22-17-55-PM.png[]
+
+
+素粒子物理学、素粒子は数学構造でしかない。
+
+素朴実在論では、つまり幼児がものがあると直感的にあり、そのまま進むと物理世界があってそれを記述しているのが、たまたま数学で奇跡的に、この奇跡の謎は素朴実在論のままではとけない。
+
+プラトンのイデア論
+
+素朴に暗黙の了解として、モノ＝オブジェクトというのが事前に存在しているに決まっている、という思い込み以上の証明はできない大前提はとっぱらってしまう。
+
+数学という究極に抽象的な学問でも、こういう素朴に最初にある、という前提で思考してきたが、矢印＝関係性しか存在しない、
+
+要素については直接言及できなくなる
+
+要素について言及したければ、関係性をもって明確にしてみせよ、
+
+ちゃんと合理的な理由がある。おもしろい。
+
+関係主義
+
+空の思想
+仏教の縁起
+仏教における空（くう、梵: śūnya [シューニャ]または梵: śūnyatā [シューニャター]、巴: suññatā [スンニャター][1]）とは、一切法は因縁によって生じたものだから我体・本体・実体と称すべきものがなく空しい（むなしい）こと[2][注釈 1]。空は仏教全般に通じる基本的な教理である[2]。
+
+誤解のないように強調しておきますが、仏教という宗教、信仰の側面ではなく、森羅万象の世界の構造の本質を解き明かそうとする哲学、構造主義、関係主義という思想の側面です。
+
+なかなか、こういう根本にある思想とか哲学というのは、「実利上関係ない」と知的作業をすっとばす怠け者も多いのですが、
+そういう人も多い物理学者のなかでアインシュタインが傑出していたのは彼には他の優秀な学者と違って哲学的バックグラウンドがあったからです。
+
+
+
+morphism arrow
+
+const object = identity = a=> a
+
+a??  a is also identity
+
+つまり、集合論がまず最初に暗黙の了解で、なにか要素オブジェクトがあると仮定して、数学ではそういう問答無用の前提を公理というわけですが、
+圏論ではそういう公理は認めません。
+
+ではそれはなんだ？
+identity = a=> a　であると矢印のループ、自己言及　だけを示します。
+
+インプットアウトプットはプレイスホルダで何でも良いし、
+アイデンティティの場合は、いかなりタイプでも同じなので、そこにあるのはただ自分自身＝identityという関係だけです。
+
+二項関係と見るならば
+恒等関係
+In set theory, where a function is defined as a particular kind of binary relation, the identity function is given by the identity relation, or diagonal of M.[3]
+
+https://en.wikibooks.org/wiki/Haskell/Category_theory
+
+
+ identity morphism
+
+ 恒等射
+
+これ自体が最小の圏です。自己相似。
+
+（幾何学の概念でいうと、図形のフラクタル構造）、基準点というものがない、
+
+射
+
+ファンクタ
+
+自然変換
+
+３つあるのですが、これらはずべて「同じもの」を今の軸足がある階層によって言葉を使い分けているだけです。
+
+
+
+
+
+じゃその自己言及している　a　とは何だ？　これは別の複雑な構造をもつ圏かもしれません、もちろん、その圏はすべて→だけで構成されています、と、上から下へ無限に降りていくことが可能です。
+
+しかし、どこかで、１とか２とか自然数などを言及する必要があるので、
+
+F-代数
+
+高校の頃に習った数学的帰納法
+
+代数、モノイド、四則演算など、すべて圏論の矢印だけで構築していきます。
+
+http://bitterharvest.hatenablog.com/entry/2019/06/09/061439
+
+
+
+image::6-8-2020-07-40-15-AM.png[]
+
+
+
+関係の合成は結合的である。
+　
+image::3-8-2020-09-56-22-AM.png[]
+
+image::3-8-2020-09-55-27-AM.png[]
+
+
+集合と写像を使ってこのような図式を描くことがまったくできないわけではないのですが，
+対象は集合でなくてもかまわないという
+ゆう
+融
+ずう
+通
+む
+無
+げ
+碍さが圏論のよさになっています．
+また，a
+f
+−→ b という射は「a から b への変化」とも考えられるし，「a から b への通信・連
+絡」とも考えられるし，「a から b へのプレゼント」かもしれないし，「a は b の祖先である」
+という親族関係かもしれないし，「a は b に食べられる」という被食捕食関係かもしれないし，
+「a は b よりも小さい」という大小関係かもしれないし，「a は b である」という文かもしれな
+いし，「a ならば b である」という論理関係かもしれません．圏論においては，射の正体・解
+釈は固定されていないのです．圏のネットワークのありようが射に意味を与えるのです．そ
+れに対して，集合論の写像は一定の定義があり，多義的な解釈をする余地がありません．
+圏論の射は集合論の写像よりはるかに融通の利く概念です．対象と射の意味づけ・解釈が，
+他者との関係性・文脈・コミュニケーション・ネットワークを通して行われるというあたり
+が，複雑な世界を記述する豊かな表現力が圏論に備わっていると考えられる理由です．
+
+
+https://www.britannica.com/science/algebra/Algebraic-superstructures
+
+Category theory
+The second attempt to
+
+ｖormalize the notion of structure developed within category theory. The first paper on the subject was published in the United States in 1942 by Mac Lane and Samuel Eilenberg. The idea behind their approach was that the essential features of any particular mathematical domain (a category) could be identified by focusing on the interrelations among its elements, rather than looking at the behaviour of each element in isolation. For example, what characterized the category of groups were the properties of its homomorphisms (mappings between groups that preserve algebraic operations) and comparisons with morphisms for other categories, such as homeomorphisms for topological spaces. Another important concept of Mac Lane and Eilenberg was their formulation of “functors,” a generalization of the idea of function that enabled them to connect different categories.
+
+カテゴリ理論
+カテゴリー理論の中で発展した構造の概念を形式化しようとした二度目の試み。最初の論文は、マックレーンとサミュエル・アイレンバーグによって1942年に米国で発表されました。彼らのアプローチの背後にある考え方は、特定の数学的領域（カテゴリ）の本質的な特徴は、各要素の振る舞いを分離して見るのではなく、その要素間の相互関係に焦点を当てることによって特定できるというものであった。例えば、群というカテゴリーを特徴づけるものは、その同型（代数的な操作を保存する群間の写像）の性質と、トポロジカル空間の同型など、他のカテゴリーのモルフィズムとの比較であった。マックレーンとエイレンバーグのもう一つの重要な概念は、「ファンクタ」の定式化であった。
+
+
+標語的に言うと，「集合論は集合が先で写像が後，圏論は射が先で集合が後」なのです．圏論では，射のネットワークを通して，特定の射や特定の対象の性質を浮かび上がらせるのです．射のネットワークから孤立した対象の性質は圏論ではわかりません．でも考えてみれば，他者から隔絶された一個の個体の性質というものは，そもそも論ずることに意味がないでしょう．圏論は，個と個の関係性を重視する，重視するというか，関係性があって初めて個性が定まるという考え方をするのです．
+
+また、f:a−→ b という射は「a から b への変化」とも考えられるし、「a から b への通信・連絡」とも考えられるし、「a から b へのプレゼント」かもしれないし、「a は b の祖先である」という親族関係かもしれないし、「a は b に食べられる」という被食捕食関係かもしれないし、「a は b よりも小さい」という大小関係かもしれないし、「a は b である」という文かもしれないし、「a ならば b である」という論理関係かもしれません圏論においては、射の正体・解釈は固定されていないのです圏のネットワークのありようが射に意味を与えるのですそれに対して、集合論の写像は一定の定義があり、多義的な解釈をする余地がありません圏論の射は集合論の写像よりはるかに融通の利く概念です対象と射の意味づけ・解釈が、他者との関係性・文脈・コミュニケーション・ネットワークを通して行われるというあたりが、複雑な世界を記述する豊かな表現力が圏論に備わっていると考えられる理由です。
+
+圏論は射から
+
+アイデンティティは、自分を赤裸々にするということともいえるが、圏論の恒等射の役割もここにある。圏論は、射だけでいろいろな性質を表現しようとするものだが、自身を表現しようとすると恒等射が必要になる。このため、射の中でも恒等射は特別な意味を有している。決して忘れてはならない射である。アイデンティティを必ず持ちましょうという射である。
+
+
+
+集合の要素という具体性がないので、同じネットワークなら同じものとみなすことができる。
+
+圏論を集合論の一般化あるいは
+集合論に代わる
+集合論を記述可能
+
+かなり新しいが、数学の基礎を集合から置き換える
+
+矢印のネットワーク
+が，後ほど説明する条件を満たしていれば，そのネットワークを圏 (category) と呼ぶ
+
+関数と射の違い
+
+関数は関係の特殊ケース
+
+
+圏の定義
+
+射の合成
+二項関係 R ⊆ X × Y はしばしば、集合を対象とする関係の圏 Rel における射 R: X → Y と見做される。圏 Rel における射の合成は、先ほど定義した関係の合成によって与えられる。集合の圏 Set は対象の類を同じくするが射が少ない Rel の部分圏である。
+
+射という単一の種類のリストとみなせるので、モノイドである。
+射の足し算が自然に成立する
+結合性　　半群
+単位元　モノイド
+
+
+
+関数と射は何が違うのか？
+この疑問に答えるためには、そもそも
+なぜ関数でなければならないのか？
+計算を押し進めていく、計算が滞りなく進んでいくというプログラミングの強い要請により、一方向の矢印
+
+矢印が戻ってきたりしたらまずい、
+関数はもっと広い概念、二項関係の特殊なケースで、矢印が一方向だという強力な制約がかかっています。
+
+https://en.wikipedia.org/wiki/Binary_relation#Operations_on_binary_relations
+
+Binary relations are used in many branches of mathematics to model a wide variety of concepts. These include, among others:
+
+the "is greater than", "is equal to", and "divides" relations in arithmetic;
+https://en.wikipedia.org/wiki/Category_of_relations
+
+image::3-7-2020-16-08-58-PM.png[]
+
+集合論に依存
+目的ではない
+
+要素については直接言及できなくなる
+
+すなわち，圏論は対象（構造の荷ない手）の内側にいっさい立ち入らない。何からできているかも，どうつながっているかも問わない。Aはほかの対象への射：A→X，ほかの対象からの射：X→Aのあつまりによって特徴づけられるだけである。その意味で圏論はさらに陰伏的で，さらに機能的である。対象は，いわばブラック・ボックスである。したがって，圏論は反原子論的である。
+　
+
+
+
+
+https://plato.stanford.edu/entries/category-theory/
+
+
+
+This is the definition one finds in most textbooks of category theory. As such it explicitly relies on a set theoretical background and language. An alternative, suggested by Lawvere in the early sixties, is to develop an adequate language and background framework for a category of categories.
+
+
+Arguments have been advanced for and against category theory as a foundational framework. (Blass 1984 surveys the relationships between category theory and set theory. Feferman 1977, Bell 1981, and Hellman 2003 argue against category theory. See Marquis 1995 for a quick overview and proposal and McLarty 2004 and Awodey 2004 for replies to Hellman 2003.) The debate has advanced slowly but surely. It has been recognized that it is possible to present a foundational framework in the language of category theory, be it in the form of the Elementary Theory of the Category of Sets, ETCS, or a category of categories, of Makkai Structuralist foundations for abstract mathematics, SFAM. Thus, it seems that the community no longer question the logical and the conceptual autonomy of these approaches, to use the terminology introduced by Linnebo & Pettigrew 2011. The main issue seems to be whether one can provide a philosophically satisfying justification for one of those framework. (See Hellman 2013, Landry 2013, Marquis 2013b, McLarty 2018.)
+
+This matter is further complicated by the fact that the foundations of category theory itself have yet to be clarified. For there may be many different ways to think of a universe of higher-dimensional categories as a foundations for mathematics. It is safe to say that we now have a good understanding of what are called
+(
+∞
+,
+1
+)
+-categories and important mathematical results have been obtained in that framework. (See, for instance, Cisinski 2019 for a presentation.) An adequate language for the universe of arbitrary higher-dimensional categories still has to be presented together with definite axioms for mathematics. (See Makkai 1998 for a short description of such a language. A different approach based on homotopy theory but with closed connections with higher-dimensional categories has been proposed by Voevodsky et al. and is being vigorously pursued. See the book Homotopy Type Theory, by Awodey et al. 2013.)
+
+
+また，圏論は情報科学でも用いられているようだ．しかし，自分は情報科学には全く疎いので不確定なことは言えないが，ここでも圏論が劇的に役立つなんてことはないと思う．数学の場合と同じで「様々なことを深く理解していれば役立つこともある」という感じで，付け焼刃の理解をした程度では「当たり前のことをわざわざ面倒にいっている」といった域を越えられないのではないだろうか．（この主張は全くの推測だが，多くのプログラマの発言からもそう感じる．）
+
+関数（写像）より根源的かつ有用な何かは残念ながら見出すことはできない。
+
+つまり、射は関数であり、ファンクタ（関手）はある種の特別な高階関数です。
+
+https://plato.stanford.edu/entries/structuralism-mathematics/
+
+
+Programmatic Reading Guide
+
+https://plato.stanford.edu/entries/category-theory/bib.html
+
+型　関数　圏
+値　関数　圏
+
+[source,js]
+.Console
+----
+
+----
+
+
+https://ncatlab.org/nlab/show/magma
+
+A binary operation on a set S is a function (−)⋅(−):S×S→S from the Cartesian product S×S to S. A magma (or binary algebraic structure, or, alternatively, a mono-binary algebra) (S,⋅) is a set equipped with a binary operation on it.
+
+集合Sに対する2値演算とは、直交積S×SからS×S→Sへの関数(-)・(-):S×S→Sのことです。
+
+
+
+
+
+
+
+
+== 代数とプログラミング
+
+代数的構造と二項演算で実現できる
+
+
+
+
+== 結合性を好む
+
+結合性がある代数構造をより好みする。
+厳選して使う。
+
+
+=== 現実世界の多くの事象が結合性を満たすモデル
+
+
+
+
+=== プログラミングは複雑なので、極力シンプルな構造に維持しておきたい。
+
+
+
+オブジェクト指向のオブジェクト
+
+演算子、関数がオブジェクトの中に組み入れられている
+
+集合と演算子がペアであるという事実は反映されているが、
+
+組み入れたために、集合の種類が異なるたびに、同じ関数を再定義することを避けるためにオブジェクトの「継承」という仕組みが必要。
+
+イメージ
+
+代数構造はそうなっていない。

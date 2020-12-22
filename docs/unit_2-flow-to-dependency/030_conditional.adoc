@@ -1,0 +1,28 @@
+= 条件分岐
+ifndef::stem[:stem: latexmath]
+ifndef::imagesdir[:imagesdir: ../img/]
+ifndef::source-highlighter[:source-highlighter: highlightjs]
+ifndef::highlightjs-theme:[:highlightjs-theme: tomorrow-night]
+ifndef::icons[:icons: font]
+
+++++
+<style type="text/css">
+p >code {background-color: #aaaaaa};　
+td >code {background-color: #aaaaaa};
+</style>
+++++
+
+[CAUTION]
+====
+完成から程遠い　10％以下　のドキュメント
+====
+　
+入力（パターンマッチ）＝結果
+
+in 演算子
+
+https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Operators/in
+
+三項演算子
+
+Option Type

@@ -1,0 +1,461 @@
+= 文(statement)から式(expression)へ＝関数型プログラミング
+ifndef::stem[:stem: latexmath]
+ifndef::imagesdir[:imagesdir: ../img/]
+ifndef::source-highlighter[:source-highlighter: highlightjs]
+ifndef::highlightjs-theme:[:highlightjs-theme: tomorrow-night]
+ifndef::icons[:icons: font]
+
+++++
+<style type="text/css">
+p >code {background-color: #aaaaaa};　
+td >code {background-color: #aaaaaa};
+</style>
+++++
+
+== 関数型プログラミングのコードは「数式」
+　
+関数型プログラミングの理論的基礎となっているlink:https://ja.wikipedia.org/wiki/%E3%83%A9%E3%83%A0%E3%83%80%E8%A8%88%E7%AE%97[ラムダ計算]がどういうものなのか？という詳細以前に、それが「計算」というくらいなのだから**「数式」である**ことがわかります。
+
+**関数型プログラミングのコードは「数式」である。**
+
+これは実は巷であまり積極的には語られず、完全に過小評価されているようだが、是非、まず最初に知っておくべきたいへん重要な事実です。
+
+== 命令型プログラミングのコードは「文(statement)」の集まり
+
+他方、命令型プログラミングは、フローをコントロールするために必要なのは、その名の通り「命令文」です。式ではありません。
+
+命令型プログラミングのコードは「文(statement)」の集まりです。
+
+文（Statement）を簡潔に述べると、処理する1ステップが1つの文と言えます。 JavaScriptでは、文の末尾にセミコロン(;)を置くことで文と文に区切りをつけます。
+
+link:https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Statements[文と宣言]
+
+には、
+
+image::4-12-2020-16-57-18-PM.png[]
+
+image::4-12-2020-16-57-50-PM.png[]
+
+などありますが、ここでは詳細には立ち入りません。
+
+要するに、JavaScriptでは、デフォルトで、 +
+
+[source,js]
+.順次処理する文のあつまり
+----
+statement1;
+statement2;
+statement3;
+----
+
+というように、「順次」はコードの上下に並べたら実現できるのだろうし、 +
+「分岐」「反復」については、上記のように、命令「文」が取り揃えられている、そしてそれらを構造化定理の如く、命令型プログラマーは至極あたりまえのように日常的に利用している、ということです。
+　
+ソースコードとして書かれた文を上から順番に処理していき、適時、`if` やら `for` 文に従って分岐、反復処理を行うことでフローコントロールを実現しプログラムが実行されます。
+
+命令型プログラミングでも、「式」は多用されるでしょう。
+
+しかしながら、
+
+`x = x + 1`
+
+というのは「式」ぽく見えますが、すでに説明したように、
+
+1.メモリから値を読み取る +
+2.値を増やします +
+3.新しい値をメモリに書き込む
+
+という命令の集まりで、数学の式として眺めると、もちろん論理的に破綻しています。
+
+この辺はかなりテキトーにすませることが通常で、それはあとで説明するとおりそれ相応の理由もあるわけですが、このせいで多大な混乱をプログラミングにもたらせています。非常に問題です。
+
+
+== 1 + 2 = 3　二項演算を軸とした関数型プログラミングのコード
+
+他方で、関数型プログラミングのコードは、式＝expressionの集まりと言えます。
+
+そして式は値であり、フローに従って時間発展しません。
+
+**関数型プログラミングのコードは「数式」である。**
+
+では関数型のコードは具体的にどんな「数式」になっているのでしょうか？
+
+
+
+プログラマーのみならず、義務教育の算数で誰でも習う
+
+stem:[1 + 2 = 3]
+
+は、link:https://ja.wikipedia.org/wiki/%E4%BA%8C%E9%A0%85%E6%BC%94%E7%AE%97[二項演算]、英語ではlink:https://en.wikipedia.org/wiki/Binary_operation[binary operation]と呼ばれています。
+
+ 数学において、二項演算（binary operation）は、数の四則演算（加減乗除）などの 「二つの数から新たな数を決定する規則」 を一般化した概念である。
+
+== 二項演算は2つの引数をとる関数
+
+二項演算という算術は小学生でも誰でも知っている概念ですが、多くのプログラマーが知らず、意識したことがないこととは、この**「二つの数から新たな数を決定する規則」**というものが実は、**2つの引数をとる関数**であるという事実です。
+
+_関数そして二項演算そのもの厳密な数学の説明は、土台から積み上げるとここまで到達するまでに分量が多いので、🟧 **UNIT 3 : 数学 Mathematics** へ切り分けています。_
+
+image::1-12-2020-13-07-41-PM.png[]
+
+link:https://en.wikipedia.org/wiki/Binary_operation[binary operation]にあるこの図は、**2つの引数をとる関数**そのもので、`○` として表現されているもの、
+
+stem:[1 + 2 = 3]
+
+の場合、`+` は、**二項演算子/binary operator**と呼ばれています。
+
+link:https://ja.wikipedia.org/wiki/%E6%BC%94%E7%AE%97%E5%AD%90[演算子]
+
+ 数学的には、基本的には、関数（単項演算子では1引数の関数、2項演算子は2引数の関数）をあらわすある種の糖衣構文のようなものに過ぎない。
+
+link:https://en.wikipedia.org/wiki/Operator_(mathematics)[Operator (mathematics)]
+
+ In mathematics, an operator is generally a mapping or function that acts on elements of a space to produce elements of another space (possibly the same space, sometimes required to be the same space). There is no general definition of an operator, but the term is often used in place of function when the domain is a set of functions or other structured objects. +
+ 数学では、演算子とは一般に、空間の要素に作用して別の空間の要素を生成する写像や関数のことを指します（同じ空間である場合もあれば、同じ空間であることが要求される場合もあります）。演算子の一般的な定義はありませんが、ドメインが関数やその他の構造化されたオブジェクトの集合である場合、関数の代わりにこの用語がよく使われます。
+
+https://www.britannica.com/topic/operator
+
+ Operator, in mathematics, any symbol that indicates an operation to be performed. Examples are Square root of√x (which indicates the square root is to be taken) and d/dx (which indicates differentiation with respect to x is to be performed). An operator may be regarded as a function, transformation, or map, in the sense that it associates or “maps” elements from one set to elements from another set. +
+ 演算子、数学では、実行されるべき演算を示す任意の記号。例としては、√xの平方根（平方根を取ることを示す）やd/dx（xに対する微分が実行されることを示す）などがある。演算子は、ある集合の要素を別の集合の要素に関連付ける、または「写像」するという意味で、関数、変換、または写像とみなされることがある。
+
+つまり、**演算子(operator)は、記号であったり、書かれている位置が異なるだけ(link:https://ja.wikipedia.org/wiki/%E4%B8%AD%E7%BD%AE%E8%A8%98%E6%B3%95[中置記法])の、関数の別の表現方法**なのです。
+
+JavaScriptでもECMAScript2016の新しい仕様として、 +
+`Math.pow()` と等価の +
+**べき乗演算子(Exponentiation Operator)** `**`
+が導入された、ということも実際あります。
+
+https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Operators/Exponentiation
+
+
+[source,js]
+.2の3乗算
+----
+Math.pow(2, 3); // 8
+
+2 ** 3; // 8
+----
+
+[source,js]
+.演算子の結合
+----
+2 ** 3 ** 2   // 512
+2 ** (3 ** 2) // 512
+(2 ** 3) ** 2 // 64
+----
+
+べき乗演算子(Exponentiation Operator) `**` の記法をみると、`Math.pow()` 関数を使うよりかは、どうもこちらのほうが簡潔にコードが書けてしまい、意味もわかりやすく、結合順序も容易にコントロールできそうなことが感じられます。
+
+== 関数をf(x)とする記法はBestではない
+
+今これとは逆に、既存の足し算の演算子である `+` という二項演算子を、2引数の関数 `plus` に変換する作業をしてみましょう。
+
+[source,js]
+.plus関数の定義
+----
+    const plus = (a, b) => a + b;
+----
+
+[source,js]
+.plus関数をつかう
+----
+    console.log(
+      1 + 2
+    ); // 3
+
+    console.log(
+      plus(1, 2)
+    ); // 3
+----
+
+`+` 演算子の代わりに `plus` 関数を1つだけ使う分には、まあさほど問題はないように見えます。
+
+[source,js]
+.plus関数をもっとつかう
+----
+    console.log(
+      1 + 2 + 3 + 4
+    ); // 10
+
+    console.log(
+      plus(plus(plus(1, 2), 3), 4)
+    ); // 10
+----
+
+しかし、我々が算数の授業で慣れ親しんでいる至極単純な数式 `1 + 2 + 3 + 4` では、JavaScriptで一般的な関数の書き方をするとネストしてしまい酷いことになっています。
+
+とりあえずここでわかることは、おそらく中学校の数学の授業で習った関数表記、
+
+stem:[f(x)]
+
+あるいは、JavaScriptプログラミングで一般的な記法、
+
+image::6-7-2020-21-26-22-PM.png[]
+`f(x)` は、けしてBestではない、ということです。
+
+むしろ二項演算が連鎖する局面、それは実際、特に関数型プログラミングではめちゃくちゃ多くなるわけですが、その際はネストしまくってメンテナンスが極めて困難になり収集がつかなくなるので有害であり避けるべきです。
+
+== ユーザ定義が可能な演算子
+
+純粋関数型言語のHaskellでは流石にこの辺はよくわかっていて、二項演算子を前置形式の関数にできたり、その逆が自由に、臨機応変に可能です。
+
+中置演算子 を `()` で囲むことで、前置形式の関数として記述できます。
+
+[source,js]
+.(Haskell) 加算
+----
+Prelude> 3 + 2
+5
+
+Prelude> (+) 3 2
+5
+----
+
+前置形式の関数を ``(backquote)` で囲むことで、中置演算子として記述できます。
+
+[source,js]
+.(Haskell) 除算の余りを求めるmod関数
+----
+Prelude> mod 3 2
+1
+
+Prelude> 3 `mod` 2
+1
+----
+
+このようにHaskellでは、関数を中置演算子にかんたんに変換できることもふくめ、任意の記号を使った演算子のユーザ定義が可能です。
+
+プログラミング界隈では一般に、link:https://ja.wikipedia.org/wiki/%E5%88%A9%E7%94%A8%E8%80%85%E5%AE%9A%E7%BE%A9%E6%BC%94%E7%AE%97%E5%AD%90[ユーザ定義演算子]やlink:https://en.wikipedia.org/wiki/Operator_overloading[演算子のオーバーロード]とも呼ばれています。
+
+これはすでに説明したとおり、関数型プログラミングでは極めて重要なのですが、非常に残念なことに**JavaScriptでは演算子をユーザ定義できるような機能が存在していません。**
+
+当然の帰結として、巷にあふれるJavaScriptの関数型のコードは、Haskellプログラマーが書く簡潔なコード、つまり自由自在に二項演算子＝中置演算子を駆使しているようなコードと比較すると、回りくどく見にくいコードに仕上がっています。
+
+個人的には「それは仕様なので仕方ない」とは済ませず、本書ではそのようなコードは受容しない、ということで、JavaScriptでも演算子のユーザ定義をできるように簡単なハックをします。
+
+== オブジェクト指向と二項演算の意外な関係性
+
+ここで、オブジェクト指向です。
+
+JavaScriptはオブジェクト指向と関数型のハイブリッド言語です。
+
+
+[TIP]
+.JavaScriptがオブジェクト指向と関数型のハイブリッド言語になった歴史的経緯
+====
+JavaScriptの生みの親であるlink:https://ja.wikipedia.org/wiki/%E3%83%96%E3%83%AC%E3%83%B3%E3%83%80%E3%83%B3%E3%83%BB%E3%82%A2%E3%82%A4%E3%82%AF[ブレンダン・アイク(Brendan Eich)]はlink:https://brendaneich.com/2008/04/popularity/[ご自身のブログポスト]には、_Nick Thompson had turned me on to link:http://mitpress.mit.edu/sicp/[SICP]._ など、その他にも関数型言語についての記載があります。
+
+本書でも後で引用することになるSICP(link:https://ja.wikipedia.org/wiki/%E8%A8%88%E7%AE%97%E6%A9%9F%E3%83%97%E3%83%AD%E3%82%B0%E3%83%A9%E3%83%A0%E3%81%AE%E6%A7%8B%E9%80%A0%E3%81%A8%E8%A7%A3%E9%87%88[計算機プログラムの構造と解釈])は関数型プログラミングの古典的な名著であり、彼はその本でも使われているSchemeという関数型言語のプログラマーでした。
+
+NetscapeNavigatorブラウザに組み込むスクリプト言語の開発者としてNetscape社にリクルートされた彼は、Schemeをスクリプト言語として採用する、という約束だったのですが、入社当時、新進気鋭のJavaというオブジェクト指向言語の人気の高まりの影響で会社のマーケティング上の理由から上司に、スクリプト言語は「Javaのように見える」必要があると命令されました。
+
+結果、彼が開発したブラウザスクリプト言語はJavaっぽいネーミングとなり、Javaっぽいオブジェクト指向と、Schemeぽいファーストクラスの関数を備えた関数型のハイブリッドとなったのです。
+====
+
+JavaScriptオブジェクトには、例にもれず、メソッドと呼ばれるオブジェクトに組み込まれている関数があります。
+
+メソッドの中には引数を取るものがあります。例えば
+
+link:https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/String/concat[String.prototype.concat()]
+
+[source,js]
+.String.concatメソッド 文字列の接続
+----
+  console.log(
+    "ab".concat("c")
+  );　// abc
+----
+
+これはご覧のとおり、String `"ab"` と `"c"` を接続する関数なので、
+
+[source,js]
+."ab" + "c" = "abc" 文字列の接続
+----
+  console.log(
+    "ab" + "c"
+  ); // abc
+----
+
+と同じ意味です。そしてよく見比べてみると、
+
+`.concat` メソッドがちょうど `+` 演算子と同じ位置で対応していて、中置の演算子として機能しています。
+
+つまり、これは文字列同士を接続する**二項演算**にほかならず、実は、1引数をとるメソッドは、すべて
+
+**オブジェクトの値　<メソッド>　(その引数)**
+
+という形式の二項演算になっています。
+
+
+JavaScriptのメソッドは、都合の良いことに、連想配列の形式でも表現できるので、
+[source,js]
+.String.concatメソッド 文字列の接続
+----
+  console.log(
+    "ab".concat("c")
+  ); // abc
+
+  console.log(
+    "ab"[`concat`]("c")
+  ); // abc
+----
+
+と書き換えたならば、オブジェクト指向っぽさは消え失せ、Haskellの二項演算の中置演算子ぽい表記になっていることに気が付きます。
+
+[source,js]
+.(Haskell) 除算の余りを求めるmod関数
+----
+Prelude> mod 3 2
+1
+
+Prelude> 3 `mod` 2
+1
+----
+
+更に、都合のよいことに、JavaScriptの既存のオブジェクトのメソッドは
+link:https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty[Object.defineProperty()]で簡単に拡張できます。
+
+ということで、任意の型(type)＝集合(set)＝オブジェクト(object)(_🟧 **UNIT 3 : 数学 Mathematics**参照_)に紐づいている二項演算の中置演算子を、任意の文字列(記号もOK！)でユーザ定義できる関数を以下のとおり用意してやることができるでしょう。
+
+[source,js]
+.JavaScript演算子のユーザ定義のための関数
+----
+  const customOperator = op => f => set =>
+      Object.defineProperty(set, op, {
+        value: function (a) {
+          return f(a)(this);
+        }
+      });//returns new set/object
+----
+
+[source,js]
+.TypeScript演算子のユーザ定義のための関数
+----
+  const customOperator =
+    (op: string) =>
+      (f: Function) =>
+        (set: Object) =>
+          Object.defineProperty(set, op, {
+            value: function (a: unknown) {
+              return f(a)(this);
+            }
+          });//returns new set/object
+----
+
+`this` はオブジェクト指向言語としてのJavaScriptへ混入された混乱とバグの原因なのですが、本書では扱うのはこれっきりで、このJavaScriptのオブジェクト指向としてのドット記法を利用したハック関数のなかに押し込めてしまいます。
+
+[source,js]
+.JavaScript演算子のユーザ定義の例 +(プラス)演算子の再発明
+----
+ //カリー化した　plus 高階関数
+    const plus =
+      b =>
+        a => a + b;
+　// plus関数の挙動の確認
+    console.log(
+      plus(2)(1)
+    ); // 3
+　// `+` 演算子をユーザ定義　plus関数の定義域としてNumberプロトタイプ集合へ紐付ける
+    customOperator(`+`)
+      (plus)
+      (Number.prototype);
+
+    console.log(
+        (1)[`+`](2)
+    );　// 3
+----
+
+JavaScriptであっても、
+
+`plus` など自由に定義した関数から
+[.lead]
+(1)[\`+`](2)
+
+と　`+` など、記号を含む自由な文字列で中置演算子をユーザ定義できるようになりました。
+
+_カリー化したplus高階関数、関数の定義域、集合、などについては、🟧 **UNIT 3 : 数学 Mathematics**参照_
+
+さて、ここまでで +
+二項演算の演算子は実は、2引数をとる関数のことで、相互に変換可能である、ことを確認しました。
+
+image::1-12-2020-20-50-38-PM.png[]
+
+さらにJavaScriptで二項演算子を自由に定義可能が可能であることを確認しました。
+
+
+== 関数(function)=値(value)
+
+image::1-12-2020-10-23-16-AM.png[]
+
+関数型プログラミングが可能な言語では、関数(function)はlink:https://ja.wikipedia.org/wiki/%E7%AC%AC%E4%B8%80%E7%B4%9A%E9%96%A2%E6%95%B0[第一級関数]/link:https://ja.wikipedia.org/wiki/%E7%AC%AC%E4%B8%80%E7%B4%9A%E3%82%AA%E3%83%96%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88[第一級オブジェクト](link:https://en.wikipedia.org/wiki/First-class_function[first-class function])となっていて、値(value)として自由自在に取り回せます。
+
+== 式(expresssion)=値(value)
+
+式(expresssion)=値(value)です。
+
+== 二項演算を軸とした関数型プログラミングのコードの全体像
+
+image:1-12-2020-07-38-22-AM.png[]
+
+
+そして、関数も式を構成する値になるので、
+　　
+image::1-12-2020-09-15-55-AM.png[]
+
+3要素に値か関数か2択なので、2の3乗で全部で8通りのパターンがあるわけですが、主に使い倒すのは上記の4パターンだけです。
+
+残りの4パターン、たとえば、
+
+image::1-12-2020-09-23-48-AM.png[]
+
+などは、利用の可能性を排除するわけではありませんが、上記の4パターンがかなり強力で汎用的なので、ほぼほぼこれらを使い倒すことになります。
+
+
+== 式(expression)＝値(value)/関数(function)が再び式の要素になる=関数型コード
+
+**式(expression)＝値(value)/関数(function)が再び式の要素になる**
+
+それが関数型プログラミングのコードであり、**関数型プログラミングの定義と考えて良い**でしょう。
+
+そして、式の値をまた別の式に投入していくと、式と式との間に依存関係が構築されていきます。
+
+小1の算数では、こういう算術を習いました。
+
+image::1-12-2020-11-20-54-AM.png[]
+
+これは先程の図法に描き直すと、
+
+image::1-12-2020-10-57-49-AM.png[]
+
+これは次の式とおなじにできる。
+
+image::1-12-2020-10-59-33-AM.png[]
+
+
+別の重要なパターンを示すと
+
+image::1-12-2020-11-01-43-AM.png[]
+
+これは次の式とおなじにできる。
+
+image::1-12-2020-11-02-17-AM.png[]
+
+
+もちろん、
+
+image::1-12-2020-10-23-16-AM.png[]
+
+なので、
+
+image::1-12-2020-11-05-33-AM.png[]
+
+という式の連鎖は、
+
+image::1-12-2020-11-10-10-AM.png[]
+
+となります。
+
+
+
+
+

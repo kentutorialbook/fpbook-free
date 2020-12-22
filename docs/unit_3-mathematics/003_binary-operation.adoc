@@ -1,0 +1,41 @@
+= 代数的構造
+:sectnums:
+ifndef::toc:[:toc: left]
+ifndef::toplevels:[:toclevels: 2]
+ifndef::stem[:stem: latexmath]
+ifndef::icons[:icons: font]
+ifndef::imagesdir[:imagesdir: ../img/]
+ifndef::source-highlighter[:source-highlighter: highlightjs]
+ifndef::highlightjs-theme:[:highlightjs-theme: tomorrow-night-eighties]
+ifndef::icons[:icons: font]
+
+++++
+<style type="text/css">
+th,td {
+    border: solid 0px;
+}　
+p>code {background-color: #aaaaaa};
+td>code {background-color: #aaaaaa};
+</style>
+++++
+
+
+
+[CAUTION]
+====
+完成から程遠い　10％以下　のドキュメント
+====
+　
+
+
+
+https://www.britannica.com/science/algebra/Structural-algebra
+
+Structural Algebra
+At the turn of the 20th century, algebra reflected a very clear conceptual hierarchy based on a systematically elaborated arithmetic, with a theory of polynomial equations built on top of it. Finally, a well-developed set of conceptual tools, most prominently the idea of groups, offered a comprehensive means of investigating algebraic properties.
+
+構造代数
+20世紀の変わり目には、代数学は、体系的に精緻化された算術に基づく明確な概念的階層を反映しており、その上に多項式の理論が構築されていた。最終的には、群の概念を中心とした概念ツールが発達し、代数的性質を調べるための包括的な手段が提供された。
+
+
+

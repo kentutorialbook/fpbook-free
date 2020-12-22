@@ -1,0 +1,287 @@
+= 演算子
+:sectnums:
+ifndef::toc:[:toc: left]
+ifndef::toplevels:[:toclevels: 2]
+ifndef::stem[:stem: latexmath]
+ifndef::icons[:icons: font]
+ifndef::imagesdir[:imagesdir: ../img/]
+ifndef::source-highlighter[:source-highlighter: highlightjs]
+ifndef::highlightjs-theme:[:highlightjs-theme: tomorrow-night-eighties]
+ifndef::icons[:icons: font]
+
+++++
+<style type="text/css">
+th,td {
+    border: solid 0px;
+}　
+p>code {background-color: #aaaaaa};
+td>code {background-color: #aaaaaa};
+</style>
+++++
+
+演算子とは関数のf(x) 写像ラムダ式以外の
+第３の表記法
+
+https://www.britannica.com/topic/operator
+
+[quote]
+
+----
+Operator, in mathematics, any symbol that indicates an operation to be performed. Examples are Square root of√x (which indicates the square root is to be taken) and d/dx (which indicates differentiation with respect to x is to be performed). An operator may be regarded as a function, transformation, or map, in the sense that it associates or “maps” elements from one set to elements from another set.
+
+演算子、数学では、実行されるべき演算を示す任意の記号。例としては、√xの平方根（平方根を取ることを示す）やd/dx（xに対する微分が実行されることを示す）などがある。演算子は、ある集合の要素を別の集合の要素に関連付ける、または「マップ」するという意味で、関数、変換、または写像とみなされることがあります。
+----
+
+
+
+
+
+
+一項演算と二項演算 写像 f : X −→ X は, 各 x ∈ X に対して何らかの演算
+を施して f(x) ∈ X を与えるという機能を持つので, この観点から一項演算と
+も呼ばれる. たとえば, 実数の符号反転 x 7→ −x, 複素共役 z 7→ z¯, 命題の否定
+P 7→ ¬P, 補集合 A 7→ Ac などは一項演算である.
+同様に, 写像 f : X × X −→ X は, 順序対 (x, y) ∈ X × X に対して何らかの
+演算を施して f(x, y) ∈ X を与えるという機能を強調して, 二項演算と呼ばれ
+ることがある. たとえば, 実数の和 (x, y) 7→ x + y, 行列の積 (A, B) 7→ AB, 命
+題の論理和 (P, Q) 7→ P ∨ Q, 集合の積 (A, B) 7→ A ∩ B などは二項演算である.
+一項演算と二項演算が混ざっている表式では, 一項演算を優先する. たとえ
+ば, A ∩ Bc では, まず一項演算 Bc を先に行い, そのあとで A と積をとるので,
+ことさら A ∩ (Bc
+) と書く必要はない. 一方, 積を先に行う場合は (A ∩ B)
+c と
+書く必要がある.
+一般に, 集合 X にいくつかの演算が与えられたものを代数系という. 基本的
+な代数系として, 半群, 群, 環, 体, 束などがある.
+
+
+
+
+
+
+JavaScriptを含むプログラミングでは拡大解釈
+多くのlink:https://developer.mozilla.org/ja/docs/Web/JavaScript/Guide/Expressions_and_Operators[演算子]は関数です。
+
+== 単項演算子
+
+image::2-7-2020-16-21-21-PM.png[]
+
+`f(5)` というのも単項演算だと言えます。
+
+image::1-10-2020-09-24-26-AM.png[]
+
+== 二項演算子
+
+二項演算子は2つインプットがあるのでカリー化すると高階関数です。
+
+
+
+image::2-7-2020-15-41-27-PM.png[]
+
+image::0-7-2020-21-07-02-PM.png[]
+
+image::2-7-2020-15-48-34-PM.png[]
+
+image:2-7-2020-15-47-45-PM.png[]
+
+
+
+
+plus = (a,b) => a+b;
+
+は二項演算
+
+
+
+
+
+
+二項演算子は　X　+ X のように中間に置かれるので、そのまま中置記法とよばれていて、
+
+=== 中置演算子
+中置演算子も関数の表記のひとつです。
+
+image::2-7-2020-16-22-33-PM.png[]
+
+image::2-7-2020-16-23-27-PM.png[]
+
+
+JavaScriptには、以前からlink:https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Math/pow[Math.pow()]という累乗あるいは冪(べき)乗の関数が存在していましたが、 +
+`**` という冪乗の演算子がES2016新機能として登場しました。
+
+[source,js]
+.2の3乗
+----
+    console.log(
+      Math.pow(2, 3)
+    ); <1>
+
+    console.log(
+      2 ** 3
+    ); <2>
+----
+<1> 8
+<2> 8
+
+二項演算子の中置記法を使うメリットは、
+我々は義務教育の数学でさんざんトレーニングされていて直感的かつ正確に関数の挙動が把握できることです。
+
+f(x)表記は単項演算は簡潔で、実際便利に使いますが、
+上記のように二項演算（カリー化すると高階関数）になると、中置記法にしたほうが直感的に正確なイメージがつかみやすくなります。
+
+また連鎖しやすくなります。
+
+=== オブジェクトのメソッド
+
+1 + 2
+
+plus = (a,b) => a+b;
+
+は二項演算
+
+plus = a => b => a + b;
+
+カリー化して
+
+plus(1, 2)
+plus(1)(2)
+
+単項演算
+
+オブジェクトのメソッドにする
+
+plus(this)(2)
+
+[source,js]
+.2の3乗
+----
+  Object.defineProperty(
+    Number.prototype,
+    'plus',
+    {
+      value: function (b) {
+        return this + b;
+      },
+      enumerable: false,
+      configurable: false,
+      writable: false
+    }
+  );
+
+  console.log(
+    1 + 2
+  );
+    console.log(
+    1 + 2 + 3
+  );
+
+  console.log(
+    1['plus'](2)
+  );
+  console.log(
+    1['plus'](2)['plus'](3)
+  );
+
+  console.log(
+    1.plus(2)
+  );
+  console.log(
+    1.plus(2).plus(3)
+  );
+  console.log(
+    1.plus(2)
+     .plus(3)
+  )
+----
+
+オブジェクトのメソッドチェーンは、二項演算の連鎖
+
+裏を返すと、オブジェクトのメソッド定義をすることで、JavaScriptでも二項演算の中置演算子を自由に定義可能ということになります。
+
+https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty
+
+[source,js]
+.2の3乗
+----
+  const customOperator = op => set => f =>
+    Object.defineProperty(set, op,
+      {
+        value: function (b) {
+          return f(this)(b);
+        },
+        enumerable: false,
+        configurable: false,
+        writable: false
+      });
+
+  customOperator('+')
+    (Number.prototype)
+    (a => b => a + b);
+
+  console.log(
+    1['+'](2)
+  );
+  console.log(
+    1['+'](2)['+'](3)
+  );
+
+  customOperator('-')
+    (Number.prototype)
+    (a => b => a - b);
+
+  console.log(
+    3['-'](2)
+  );
+  console.log(
+    3['-'](2)['-'](1)
+  );
+----
+
+Array.map(f)
+
+Arrayオブジェクトに最初から実装されている組み込み関数（オブジェクト指向の用語でいうとメソッド）
+はArrayオブジェクトと関数の二項演算
+
+
+
+=== f(x)表記を避ける
+
+image::2-7-2020-16-25-08-PM.png[]
+
+全く同じ意味でも二項演算子では簡潔に書けるものが、f(x)記法では入れ子になってしまい煩雑になってしまいます。
+
+
+=== パイプライン演算子(Pipeline operator)
+
+image::2-7-2020-16-26-11-PM.png[]
+
+パイプライン演算子は、インプットが関数である、高階関数であり、二項演算子。
+
+image::2-7-2020-16-27-44-PM.png[]
+
+https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Operators/Pipeline_operator
+
+関数呼び出しの連結
+
+パイプライン演算子は、複数の関数の連結を読みやすくすることができます。
+
+
+
+[source,js]
+----
+const double = n => n * 2;
+const increment = n => n + 1;
+
+// パイプライン演算子なし
+double(increment(double(double(5)))); // 42
+
+// パイプライン演算子あり
+5 |> double |> double |> increment |> double; // 42
+----
+
+
+
+== 三項演算子(条件演算子)
+
+https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Operators/Conditional_Operator
+

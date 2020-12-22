@@ -1,0 +1,197 @@
+= 集合と写像
+:sectnums:
+ifndef::toc:[:toc: left]
+ifndef::toplevels:[:toclevels: 2]
+ifndef::stem[:stem: latexmath]
+ifndef::icons[:icons: font]
+ifndef::imagesdir[:imagesdir: ../img/]
+ifndef::source-highlighter[:source-highlighter: highlightjs]
+ifndef::highlightjs-theme:[:highlightjs-theme: tomorrow-night-eighties]
+ifndef::icons[:icons: font]
+
+++++
+<style type="text/css">
+th,td {
+    border: solid 0px;
+}　
+p>code {background-color: #aaaaaa};
+td>code {background-color: #aaaaaa};
+</style>
+++++
+
+== 集合と写像
+
+関数は、link:https://ja.wikipedia.org/wiki/%E9%9B%86%E5%90%88[集合]の観点から描き直せます。
+
+
+image::2-7-2020-13-30-13-PM.png[]
+
+
+こういうのをlink:https://ja.wikipedia.org/wiki/%E9%9B%86%E5%90%88%E8%AB%96[集合論]の用語では、link:https://ja.wikipedia.org/wiki/%E5%86%99%E5%83%8F[写像]と呼びますが、呼び方や眺め方、描き方が異なるだけで、関数と同じものです。
+
+
+
+日常会話で、
+
+「国の首都っていうのは必ず都市でしょ？」
+
+という「一般論」は集合論で写像
+
+首都：国→都市
+
+のことを言っています。
+
+「うーん、ちょっと待って！抽象的で何を言ってるのかわからない。」
+
+となるのはよくあることです。そのとき、
+
+「具体的に言うと、たとえば、 +
+**イギリス**という**国**  +
+の首都は→ +
+ **ロンドン**という**都市** +
+ に必ずなっているでしょ？」
+
+
+この「という〇〇」を「具体的に言うと、たとえば、」
+
+としたのは、〇〇という集合と写像のレベルで話をしていたものを、
+
+「具体的」な集合の要素にレベルを落とした、ということになります。
+
+
+
+https://www.britannica.com/science/set-theory
+
+**Set theory**, branch of mathematics that deals with the properties of well-defined collections of objects, which may or may not be of a mathematical nature, such as numbers or functions. The theory is less valuable in direct application to ordinary experience than as a basis for precise and adaptable terminology for the definition of complex and sophisticated mathematical concepts.
+
+**集合論**、数学の一分野で、数や関数などの数学的性質を持つか否かにかかわらず、対象物のよく定義された集合の性質を扱う。この理論は、複雑で洗練された数学的概念を定義するための正確で適応性のある用語の基礎としての価値よりも、通常の経験への直接的な応用としての価値の方が低い。
+
+
+https://www.britannica.com/science/mapping
+
+**Mapping**, any prescribed way of assigning to each object in one set a particular object in another (or the same) set. Mapping applies to any set: a collection of objects, such as all whole numbers, all the points on a line, or all those inside a circle. For example, “multiply by two” defines a mapping of the set of all whole numbers onto the set of even numbers. A rotation is a map of a plane or of all of space into itself. In mathematics, the words mapping, map, and transformation tend to be used interchangeably.
+
+**マッピング**、あるセットの各オブジェクトに、別の（または同じ）セットの特定のオブジェクトを割り当てる任意の所定の方法。マッピングは、すべての集合に適用されます: すべての整数、線上のすべての点、または円内のすべての点などのオブジェクトの集合。例えば、"multiply by two "は、すべての整数の集合から偶数の集合へのマッピングを定義しています。回転とは、平面の写像、または空間のすべての写像をそれ自身に写すことです。数学では、写像、写像、変換という言葉は互換的に使われる傾向があります。
+　
+
+英和関数（英和写像）の場合はもちろん、こうなります。
+
+image::2-7-2020-13-31-46-PM.png[]
+
+「サイコロの目が偶数か奇数か？」と振り分ける事も関数（写像）です。
+
+image::2-7-2020-13-32-32-PM.png[]
+
+image::2-7-2020-13-35-58-PM.png[]
+
+集合 stem:[X] の各要素 stem:[x] に +
+集合 stem:[Y] の1つの要素 stem:[y] を対応させる規則を +
+stem:[X]からstem:[Y]への写像と呼びます。
+
+
+== 関数と定義域(domain)と終域値域(range)と型(type)
+
+文字列　　　小文字→大文字
+
+　
+**2つの物事の関係性(binary relation)を持っている**アイテム、「必ず答えを返してくるやつ」ではあるのですが、見方を変えたために、より「ある集合から別の集合へ転写するやつ」という感じになっています。 +
+何が良いのかというと、構造が明確になり、より厳密な議論がしやすくなります。 +
+特に、国と都市の集合、あるいは、英語と日本語の集合という範囲が明確になっています。 +
+実は、冒頭から説明している関数でも、link:https://ja.wikipedia.org/wiki/%E5%AE%9A%E7%BE%A9%E5%9F%9F[定義域](link:https://www.mathsisfun.com/sets/domain-range-codomain.htmlj[domain])という話はセットで必ずあります。
+
+
+この一見、面倒くさい議論は実はかなり重要で、**首都関数のインプットは必ず「国」である、と決め打ちしているのと同じ**です。 +
+**首都関数の定義域(domain)は「国」である。** +
+関数はいつもこのように、数式でかつXY平面にプロットできるものとは限らないので、一般的にはこうやって集合の範囲として捉えたほうが概念的には自然ではるかにわかりやすくなります。 +
+ただし、数値の場合は、上記のようにXY軸にプロットしているほうが視覚的に明確になるメリットは言うまでもありません。
+
+
+y = 2x
+
+自然数　自然数
+整数　　整数　　＞０
+
+実数　実数
+
+image::0-10-2020-19-12-07-PM.png[]
+
+image::0-10-2020-19-13-09-PM.png[]
+
+image::0-10-2020-19-14-36-PM.png[]
+
+
+image::5-7-2020-07-51-25-AM.png[]
+
+https://www.mathsisfun.com/sets/domain-range-codomain.html
+
+image::0-10-2020-16-13-22-PM.png[]
+
+- 写像(関数)  stem:[f] の**定義域/始域(domain)**は stem:[X]
+
+- 写像(関数) stem:[f] の**値域(range)**は stem:[f(x)]
+
+- 写像(関数) stem:[f] の**終域(codomain)**は stem:[Y]
+
+link:https://ja.wikipedia.org/wiki/%E5%AE%9A%E7%BE%A9%E5%9F%9F[定義域/始域(domain)]
+
+[quote]
+
+----
+数学における写像の定義域（ていぎいき、英: domain of definition）あるいは始域（しいき、英: domain; 域, 領域）とは、写像の値の定義される引数（「入力」）の取り得る値全体からなる集合である。
+----
+
+link:https://ja.wikipedia.org/wiki/%E5%80%A4%E5%9F%9F[値域(range)]
+
+[quote]
+
+----
+数学、特に素朴集合論における写像の値域（ちいき、英: range）は、その写像の終域または像の何れかの意味で用いられる。
+----
+
+link:https://ja.wikipedia.org/wiki/%E7%B5%82%E5%9F%9F[終域(codomain)]
+
+[quote]
+
+----
+数学において写像の終域（しゅういき、英: codomain; 余域）あるいは終集合（しゅうしゅうごう、英: target set）は、写像を f: X → Y と表すときの集合 Y、すなわち写像 f の出力する値がその中に属するべきという制約を定める集合をいう。終域の代わりに「値域」という語を用いる場合もあるが、値域は写像の像（出力される値すべてからなる集合、f: X → Y で言えば f(X)）の意味で用いることが多いので注意すべきである。
+----
+
+[quote]
+
+----
+定義と注意
+さて Bourbaki (1954) の意味で写像（函数）を定義するのであれば、終域は写像 f の一部として含まれる[1]。即ち、写像 f とは三つ組 (X, Y, F) であって F が直積集合 X × Y の函数的部分集合（すなわち函数関係）[2]かつ F に属する順序対の第一成分の成す集合（すなわち定義域）が X に一致するものをいう。このとき集合 F はこの写像のグラフと呼ばれる。また、x が写像 f の定義域 X の元を亙るとき、f(x) の形に書ける元全てからなる集合を f の値域と呼ぶ。一般に値域は終域の部分集合であって、従って一般には両者は一致しないことが起こり得る。一致する場合（すなわち全射）でないならば、終域に属する適当な元 y に対して、方程式 f(x) = y は解を持たない。
+
+ブルバキはまた別な定義として、「写像」を単に函数的グラフそのものと定め、これはまた広く用いられている定義であるが、これには終域が定義として含まれない。例えば集合論（英語版）において、定義域 X が真の類であることを許す方が望ましいという場合には、三つ組 (X, Y, F) といったものは厳密な意味では存在しないため定義に用いるには不適当だが、グラフによる定義ならば自然である。ただ、文献によっては f: X → Y という見かけ上終域に言及する形で写像を導入していながら、その後は暗黙にこの終域を含めない定義を用いる場合もあるので注意が必要である。
+----
+
+
+
+　
+
+
+https://en.wikipedia.org/wiki/Binary_relation
+
+https://ja.wikipedia.org/wiki/%E4%BA%8C%E9%A0%85%E9%96%A2%E4%BF%82
+
+
+　
+
+image::5-7-2020-09-09-13-AM.png[]
+
+image::5-7-2020-09-11-20-AM.png[]
+
+image::5-7-2020-09-26-03-AM.png[]
+
+https://www.mathsisfun.com/sets/function.html
+
+ただし、Google検索結果のように、「複数URLのリスト」のアウトプットは One-to-many のNGケースではありません。
+
+many-to-one については、サイコロの目が偶数か奇数か？の関数で説明したとおりです。
+
+なんでこういう条件がある関数でなければならないのか？
+
+関数はもっと広い二項関係の一部（部分集合）。
+
+プログラミングは処理をする、計算をすすめていく、という明確な目的があるので、単なる二項関係よりも、より厳しい条件である関数が適している。
+

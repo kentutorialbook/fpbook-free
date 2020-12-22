@@ -1,0 +1,61 @@
+= 依存グラフ
+ifndef::stem[:stem: latexmath]
+ifndef::imagesdir[:imagesdir: ../img/]
+ifndef::source-highlighter[:source-highlighter: highlightjs]
+ifndef::highlightjs-theme:[:highlightjs-theme: tomorrow-night]
+ifndef::icons[:icons: font]
+
+++++
+<style type="text/css">
+p >code {background-color: #aaaaaa};　
+td >code {background-color: #aaaaaa};
+</style>
+++++
+
+[CAUTION]
+====
+完成から程遠い　10％以下　のドキュメント
+====
+　
+
+一般に反復で「式」を使う正しいやりかたとは、
+
+モノイド(Monoid)という代数構造 の畳み込み関数(Fold/reduce)を利用する。例↓
+
+image::2-12-2020-17-16-11-PM.png[]
+
+
+まず1–5の数列(Array)を素直に用意しておき（データを作りながら計算などしない、データは最初から全部用意する）、それを畳み込む(Array.reduce)だけです。
+
+ const sequence =
+       [...Array(5).keys()] // [0,1,..,4]
+          .map(a => a + 1); // [1,2,..,5]
+
+const multiply = (a, b) => a * b;
+const result = sequence.reduce(multiply);
+
+console.log(result); //120
+このコードは、どこにもfor文という制御構文も、それに含まれている条件分岐もありません。シンプルで間違いがありません。
+
+このように、順次はちょっとさらにややこしいので今回は省略で、デフォのJavaScriptの上から下へをそのまま踏襲しますけども、分岐、反復については、if構文、for構文という制御構文を使うことなしに、式の計算だけでやる、というスマートな方法、つまり複雑なフローチャートでやる命令型プログラミングではなく、値と式、関数だけ使う宣言型、関数型プログラミングを紹介しました。
+
+
+
+== フローがなくイミュータブルな式のコード＝関数型プログラミング
+
+[source,js]
+.Functional
+----
+   const natural = n =>
+      [...Array(n).keys()]
+        .map(a => a + 1);
+
+    console.log(natural(10));
+    //[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+    const plus = (a, b) => a + b;
+
+    const result = natural(10).reduce(plus);
+
+    console.log(result);//55
+----

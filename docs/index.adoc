@@ -1,0 +1,140 @@
+= 忙しいプログラマーのための関数型プログラミング　Functional Programming for the Working Programmer
+岡部　健 / Ken Okabe <kentutorialbook@gmail.com>
+:keywords: monoid, functor, monad, functional programming, funcction, JavaScript, ECMAScript, Promise, FRP, io-next, 関数型プログラミング, モナド, プログラミング
+:description: timeline FRP Monad
+:homepage:    https://kentutorialbook.github.io/30minLearningJavaScriptMonad/
+:doctype: book
+:toc: left
+:toclevels: 2
+:sectnums:
+:stem: latexmath
+:icons: font
+:source-highlighter: highlightjs
+:highlightjs-theme: tomorrow-night
+:imagesdir: ./img/
+
+++++
+<style type="text/css">
+th,td {
+    border: solid 0px;
+}　
+
+p>code {background-color: #aaaaaa};
+td>code {background-color: #aaaaaa};
+
+</style>
+++++
+
+====
+
+2021/1/中旬リリースを予定しているプログラミング電子書籍のアルファ版を無料公開しています。 +
+この公開ドキュメント自体随時アップデートされますが、最終的な公開範囲については未定です。 +
+製品版は、学生向gけには無料、社会人、プロのプログラマー向けには有料を予定しています。 +
+価格は、複数ボリュームで、合計9000円ほど。デジタルコンテンツとして永続的にアップデートされ通知されます。
+
+**リリース日までは別途専用のGoogleグループにメール登録することで、最新情報の通知が届きます。**
+
+配信専用
+https://groups.google.com/g/functional-programming-for-the-working-programmer
+
+
+**現在、本書籍のアルファ、ベータバージョンのレビュワーを募集しております。**
+
+★ リターン
+
+- 電子書籍全セット(9000円相当)無料、永続アップデート込
+- 期間中、プログラミングに関する質問、相談無料 どのレベルでもOK
+- 関連して書籍に盛り込んでほしい内容、具体的なコードサンプルのリクエスト可
+
+★ ご協力いただきたい要件
+
+- 活動が確認できるSNSアカウントやブログ(捨てアカウントなどはご遠慮ください)
+- SNSやブログを通じて、フォロワーへの当書籍のリリースの告知など、販売プロモーションへの参加
+- SNSやブログを通して、書籍のレビュー Qiita投稿なども自由
+- Googleグループやメールを通じて、著者へのフィードバック
+- 関連して書籍に盛り込む内容、具体的なコードサンプルのリクエスト可、たとえば現在こういうコードを書いているのだけど、関数型のコードではどうなるのか？など
+
+kentutorialbook@gmail.com +
+まで、ご活動が確認できるSNSアカウントやブログなどのURLを添えて、是非お知らせください。
+
+====
+
+[.lead]
+**🟧 UNIT 1**
+プログラミングのおおまかな枠組み、パラダイムについて解説していきます。
+
+[.lead]
+**🟧 UNIT 2**
+より具体的に、命令型コードのフローを関数型コードの式で表現する依存グラフへ置き換える方法について解説していきます。命令型思考による概念＝いわゆる「非同期処理」もこの枠組みへ統合します。( _UNIT2の現在の完成度は50％以下です_ )
+
+[.lead]
+**🟧 UNIT 3**
+より詳細な数学的要素、そもそも関数(function)とは？型(type)って何？モノイド(monoid)、モナド(monad)などについて解説していきます。( _UNIT3の現在の完成度は30％以下です_ )
+
+:leveloffset: 0
+
+= 🟧 UNIT 1 : パラダイム Paradaigm
+
+:leveloffset: 1
+
+include::./unit_1-paradigm/000_introduction.adoc[]
+
+include::./unit_1-paradigm/010_legacy.adoc[]
+
+include::./unit_1-paradigm/020_expression.adoc[]
+
+include::./unit_1-paradigm/025_complexity-associativity.adoc[]
+
+include::./unit_1-paradigm/026_set-operation-type-.adoc[]
+
+include::./unit_1-paradigm/027_function-monoid.adoc[]
+
+include::./unit_1-paradigm/028_functor.adoc[]
+
+:leveloffset: 0
+
+= 🟧 UNIT 2 : フローから依存グラフの式へ
+
+:leveloffset: 1
+
+include::./unit_2-flow-to-dependency/030_conditional.adoc[]
+
+include::./unit_2-flow-to-dependency/040_dependency-graph.adoc[]
+
+include::./unit_2-flow-to-dependency/100_world-model.adoc[]
+
+include::./unit_2-flow-to-dependency/150_FRP-spreadsheet.adoc[]
+
+:leveloffset: 0
+
+= 🟧 UNIT 3 : 数学 Mathematics
+
+:leveloffset: 1
+
+include::./unit_3-mathematics/000_algebraic_structure.adoc[]
+
+include::./unit_3-mathematics/005_monoid.adoc[]
+
+include::./unit_3-mathematics/010_function.adoc[]
+
+include::./unit_3-mathematics/011_mapping.adoc[]
+
+include::./unit_3-mathematics/014_notation.adoc[]
+
+include::./unit_3-mathematics/020_higher-order-function.adoc[]
+
+include::./unit_3-mathematics/030_operator.adoc[]
+
+//include::./unit_3-mathematics/060_category-theory.adoc[]
+
+include::./unit_3-mathematics/120_functor.adoc[]
+
+include::./unit_3-mathematics/130_monad.adoc[]
+
+include::./unit_3-mathematics/150_reactive-monad.adoc[]
+
+
+:leveloffset: 0
+
+= License
+

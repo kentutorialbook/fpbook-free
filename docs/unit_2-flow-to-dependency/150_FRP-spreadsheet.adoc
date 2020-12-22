@@ -1,0 +1,413 @@
+= FRP　スプレッドシート
+ifndef::stem[:stem: latexmath]
+ifndef::imagesdir[:imagesdir: ../img/]
+ifndef::source-highlighter[:source-highlighter: highlightjs]
+ifndef::highlightjs-theme:[:highlightjs-theme: tomorrow-night]
+ifndef::icons[:icons: font]
+
+++++
+<style type="text/css">
+p >code {background-color: #aaaaaa};　
+td >code {background-color: #aaaaaa};
+</style>
+++++
+
+[CAUTION]
+====
+完成から程遠い　10％以下　のドキュメント
+====
+　
+
+== 永続データ構造 たとえばGitとか
+
+link:https://ja.wikipedia.org/wiki/%E6%B0%B8%E7%B6%9A%E3%83%87%E3%83%BC%E3%82%BF%E6%A7%8B%E9%80%A0[永続データ構造]
+
+
+link:https://en.wikipedia.org/wiki/Persistent_data_structure[Persistent data structure]
+
+
+ 永続データ構造（えいぞくデータこうぞう、英: Persistent data structure）は、変更される際に変更前のバージョンを常に保持するデータ構造である。このようなデータ構造は、更新の際に元のデータ構造を書き換えるのではなく、新たなデータ構造を生成すると考えられ、イミュータブルなデータ構造の構築に利用可能である。
+
+
+永続データ構造というのは、簡単に言い表すと「データの足し算」という算術、代数構造の操作です。
+
+たとえば、文字列の接続
+
+"AB" + "C" = "ABC"
+
+という式は、２つの文字列を接続した結果、新しい文字列というデータ構造が生成されていると言えます。
+
+
+
+== 巷で「非同期処理」と呼ばれるものの正体
+
+「非同期処理」という言葉は需要の高い言葉です。
+
+この言葉はご覧のとおり「同期処理」という概念の否定形というか対立概念で、ベースには、「同期処理」という概念があります。
+
+そして「同期処理」とは、なんのことはない命令型プログラミングのフローのことでしかありません。
+
+
+== Promise
+
+
+== 時間軸マッピング　
+
+[source,js]
+.Console
+----
+
+[1,2,3,4,5] map f
+
+setInterval(f, 1000);
+
+intervalStream(1000) map f
+
+----
+
+
+== スプレッドシートのようにコーディングする
+
+== 依存関係を解決する
+
+== Reactive Functor
+
+解説
+
+[source,js]
+.Reactive Functor
+----
+{
+  const identity = a => a;
+  const right = a => b => b;
+  const log = msg => right
+    (console.log(msg))
+    (msg);
+  const undefinedCheck = a => (a == null);// ==
+  const optionMap = f => a =>
+    undefinedCheck(a)
+      ? undefined
+      : f(a);
+
+  {
+    "----test"|>log;
+
+    const register = f =>
+      A => // register(f): A => B
+        (B => right
+          (A.list = //mutable
+            A.list//add B-function to A-list
+              .concat(a => B|> trigger(a |> optionMap(f))))
+          (B|> trigger(A.lastVal |> optionMap(f)))
+        )(IO(undefined)) //B = new IO
+
+    const trigger = a =>
+      A => right(right
+        (A.lastVal = a) //mutable
+        (A.list.map(f => a |> optionMap(f)))//trigger f in list
+      )(A);
+
+    //spreadsheel cell corresponds to IO
+    const IO = a => ({
+      lastVal: a, //mutable
+      list: [] //mutable
+    });
+
+    const A = IO(undefined);
+
+    const B = A
+      |> register(a => a * 2)
+      |> register(log);
+
+    const C = A |> register(log);
+
+    A |> trigger(3)
+      |> trigger(5);
+  }
+}
+
+
+----
+
+
+
+== Reactive Monad
+
+[source,js]
+.Reactive Monad
+----
+{
+  const identity = a => a;
+  const right = a => b => b;
+  const log = msg => right
+    (console.log(msg))
+    (msg);
+  const undefinedCheck = a =>
+    (a === undefined) || (a === null);
+  const optionMap = f => a =>
+    undefinedCheck(a)
+      ? undefined
+      : f(a);
+
+  "----reactive monad!"|>log;
+
+  const customOperator = op => f => set =>
+    Object.defineProperty(set, op, {
+      value: function (a) {
+        return f(a)(this);
+      }
+    });//returns new set/object
+
+  const flatRegister = f =>
+    A => // flatRegister(f): A => B
+      (B => right
+        (A.list = //mutable
+          A.list//add B-function to A-list
+            .concat(a => B|> flatTrigger(a |> optionMap(f))))
+        (B|> flatTrigger(A.lastVal |> optionMap(f)))
+      )(IO(undefined)) //B = new IO
+
+  const flatTrigger = a => A =>
+    (aObject => // object | IO
+      "lastVal" in aObject  //pattern match
+        ? A|> trigger(aObject.lastVal) //flat TTX=TX
+        : A|> trigger(a)
+    )(Object(a)); //primitive is wrapped into object
+
+  const trigger = a =>
+    A => right(right
+      (A.lastVal = a) //mutable
+      (A.list.map(f => a |> optionMap(f)))//trigger f in list
+    )(A);
+
+  //spreadsheel cell corresponds to IO
+  //the last element of infinite list (git)
+  //https://en.wikipedia.org/wiki/Persistent_data_structure
+  const IO = a => ({
+    lastVal: a, //mutable
+    list: [] //mutable
+  })
+    |> customOperator('>>')(flatRegister);
+
+  const next = flatTrigger;
+
+  "============================"|>log;
+
+  const stream = IO("hello");
+
+  const logStream = stream['>>'](log);
+
+  stream |> next("world");
+  stream |> next("!!");
+
+  const A = IO(undefined);
+
+  const B = A
+  ['>>'](a => a * 2)
+  ['>>'](log);
+
+  const C = A['>>'](log);
+
+  A |> next(3)
+    |> next(5);
+
+
+  Function.prototype |>
+    customOperator('.')
+      (g => f => x => x |> f |> g);
+  Function.prototype |>
+    customOperator('..')
+      (g => f => x => IO(x)['>>'](f)['>>'](g));
+
+  {
+    "============================"|>log;
+    "==monad laws================"|>log;
+    "============================"|>log;
+
+    {
+      "associativity------"|>log;
+
+      const f1 = a => a * 2;
+      const f2 = a => a + 1;
+      {
+        IO(1)['>>'](f1)['>>'](f2)
+        ['>>'](log);
+      }
+      {//endofunctor
+        IO(1)['>>'](x => x|> f1|> f2)
+        ['>>'](log);
+
+        IO(1)['>>']((f1)['.'](f2))
+        ['>>'](log);
+      }
+      {
+        IO(1)['>>'](x => IO(x)['>>'](f1)['>>'](f2))
+        ['>>'](log);
+
+        IO(1)['>>']((f1)['..'](f2))
+        ['>>'](log);
+      }
+      {//composition is point free
+        "monad composition"|> log;
+
+        const io1 =
+          IO['..'](f1)['..'](f2)['..'](log);
+
+        1 |> io1;
+
+        const io2 =
+          (f1)['..'](f2)['..'](log);
+
+        1 |> io2;
+
+        const io3 =
+          (f1)['..'](f2)['..'](log)['..'](IO);
+
+        1 |> io3;
+      }
+    }
+    {
+      "associativity Monad Function------"|>log;
+
+      const f1 = a => IO(a * 2);
+      const f2 = a => IO(a + 1);
+      {
+        IO(1)['>>'](f1)['>>'](f2)
+        ['>>'](log);
+      }
+      {
+        IO(1)['>>'](x => IO(x)['>>'](f1)['>>'](f2))
+        ['>>'](log);
+
+        IO(1)['>>']((f1)['..'](f2))
+        ['>>'](log);
+      }
+    }
+    {
+      "associativity Monad Function Monad value------"|>log;
+
+      const f1 = a => a['>>'](a => IO(IO(a * 2)));
+      const f2 = a => a['>>'](a => IO(IO(a + 1)));
+      const a = IO(1);
+      {
+        IO(a)['>>'](f1)['>>'](f2)
+        ['>>'](log)['>>'](log);
+      }
+      {
+        IO(a)['>>'](x => IO(x)['>>'](f1)['>>'](f2))
+        ['>>'](log)['>>'](log);
+
+        IO(a)['>>']((f1)['..'](f2))
+        ['>>'](log)['>>'](log);
+      }
+    }
+    {
+      "idientiry left-right-- m * f ----"|>log;
+
+      const f = a => IO(a * 2);
+
+      //left  e * f = f
+      const left = 1 |>
+        (IO)['..'](f);
+
+      //center  f
+      const center = 1 |>
+        f;
+
+      //right  m * e = m
+      const right = 1 |>
+        (f)['..'](IO);
+
+      left['>>'](log);
+      center['>>'](log);
+      right['>>'](log);
+    }
+  }
+
+  {
+    "equations ------"|>log;
+
+    const a = IO(1);
+
+    const b = a['>>'](a => a * 2);
+
+    const c =
+      a['>>'](a =>
+        b['>>'](b => a + b));
+
+    const aLog = a['>>'](log);
+    const bLog = b['>>'](log);
+    const cLog = c['>>'](log);
+
+    a|> next(10);
+    a|> next(100);
+
+  }
+
+  {
+    const map = 'map';
+    const a = [1, 2, 3];
+
+    a[map](a => a * 2)
+      |> log;
+  }
+
+  {
+    "timeStream -> consoleStream ------" |> log;
+
+    const options = {
+      year: 'numeric', month: 'numeric', day: 'numeric',
+      hour: 'numeric', minute: 'numeric', second: 'numeric',
+      hour12: false,
+    };
+
+    const currentTime = () =>
+      new Intl.DateTimeFormat('en-US', options).format(Date.now())
+
+    const timeStream = IO(undefined);
+    const f = () =>
+      timeStream |> next(currentTime());
+    setInterval(f, 1000);
+
+    const consoleStream = timeStream['>>'](log);
+  }
+
+
+  {
+    IO("dummy")[`>>`](task1)[`>>`](task2)[`>>`](task3);
+
+    const tasks = (task1)[`.`](task2)[`.`](task3);
+
+    IO("dummy")[`>>`](tasks);
+
+
+    //Persistent data structure
+    const ab = "ab";
+    const abc = ab + "c";
+
+    [1];
+
+    [1].concat(2);
+
+    [1].concat(2).concat(3);
+
+    [1].concat(2).concat(3).concat(4);
+
+    const A = IO(undefined);
+    const B = A[`>>`](a => a * 2);
+
+    const logger = B[`>>`](log);
+
+    A
+      |> next(1)
+      |> next(2)
+      |> next(3);
+    // A.concat(1).concat(2).concat(3)
+
+  }
+}
+
+
+
+
+----
